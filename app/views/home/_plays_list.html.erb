@@ -1,0 +1,10 @@
+<tr>
+  <th>TIMER</th>
+  <th>SOURCE</th>
+</tr>
+<% @plays.each do |post| %>
+  <tr>
+    <td><%= post.timer %></td>
+    <td><%= post.source %></td>        
+  </tr>
+<% end %>

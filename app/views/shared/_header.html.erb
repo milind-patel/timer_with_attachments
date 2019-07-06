@@ -1,8 +1,12 @@
 <div class="page-header">
   <h1>Select Any Option 
-  	<small><%= link_to "Page 1", new_attachment_path,class: "btn btn-primary btn-lg" %></small>
-	<small><%#= link_to "Page 2", posts_path,class: "btn btn-primary btn-lg" %></small>
-	<% unless params[:controller] == "home" %>
+  	<% unless params[:controller] == "attachments"%>
+  		<small><%= link_to "Page 1", new_attachment_path,class: "btn btn-primary btn-lg" %></small>
+  	<% end %>
+  	<% unless params[:controller] == "home" && params[:action] == "plays" %>
+		<small><%= link_to "Page 2", plays_path,class: "btn btn-primary btn-lg" %></small>
+	<% end %>
+	<% unless params[:controller] == "home" && params[:action] == "index" %>
 		<small><%= link_to "HOME", "/",class: "btn btn-primary btn-lg" %></small>
 	<% end %>
   </h1>

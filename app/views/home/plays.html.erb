@@ -1,0 +1,73 @@
+
+<div class="col-md-2">
+  <h1><span id="timer"></span></h1>
+  <%= button_tag "Log Time", type: 'button',class: 'btn btn-default',id: "SaveTimer"%>
+</div>
+
+<div class="col-md-10">
+  <img id="image" style="width: 25%;"/>
+</div>
+
+
+
+<div style="clear:both"></div>
+<div class="panel panel-default" style="margin-top: 20px;">
+  <div class="panel-heading">Play Records</div>
+  <table id="plays_data" class="table">
+    <%= render partial: "plays_list" %>
+  </table>
+</div>
+
+
+
+
+<script type="text/javascript">
+  (function() {
+    document.addEventListener("DOMContentLoaded", function(event) { 
+      var count = 10;
+      var image_count = 0;
+      var img = document.getElementById( "image" );
+      var total_images = <%= @images.count rescue nil %>;
+
+      document.getElementById("SaveTimer").onclick = function(){
+        Rails.ajax({
+          type: "POST",
+          url: "/log_timer",
+          data: "image_count="+(parseInt(image_count)) +"&timer="+count,
+          success: function(data) { 
+            var tbody = document.querySelector('tbody');
+            tbody.innerHTML += '<tr><td>'+data.timer+'</td><td>'+data.source+'</td></tr>';
+          }
+        })
+      };
+      
+      function getImage(){
+        Rails.ajax({
+          type: "GET",
+          url: "images/"+image_count,
+          dataType: "json",
+          success: function(data) { 
+            console.log(data);
+            img.src = data; 
+            image_count = image_count + 1;
+            if(image_count == total_images)
+              image_count = 0;
+          }
+        })
+      }
+
+      function reduce_timer_count(){
+        count = count - 1;
+        if(count == 0)
+          count = 10;
+      }
+      function getTimeLeft() {
+        document.getElementById("timer").innerHTML = count;
+        
+      }
+      setInterval(getImage, 1000);
+      setInterval(getTimeLeft, 1000);  
+      setInterval(reduce_timer_count, 1000);
+    });
+  })();
+</script>
