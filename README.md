@@ -7,20 +7,6 @@ This README would normally document whatever steps are necessary to get the appl
 * It contains feature of uploading multiple attachments together.
 * It contains feature of running a timer and realtime updation of image source based on timer changes. 
 * It contains Ajax call which will insert timer value and image selection on button click. 
-
-* System dependencies - Postgres
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# timer_with_attachments
+* Rails version :- 5.2.3
+* Ruby version :- 2.3.1
+* Database :- postgres

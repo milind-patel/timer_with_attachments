@@ -1,13 +1,13 @@
 <div class="page-header">
   <h1>Select Any Option 
   	<% unless params[:controller] == "attachments"%>
-  		<small><%= link_to "Page 1", new_attachment_path,class: "btn btn-primary btn-lg" %></small>
+  		<small><a href="" onclick="window.location.href = '<%= new_attachment_path %>';" class="btn btn-primary btn-lg">Page 1</a></small>
   	<% end %>
   	<% unless params[:controller] == "home" && params[:action] == "plays" %>
-		<small><%= link_to "Page 2", plays_path,class: "btn btn-primary btn-lg" %></small>
+		<small><a href="" onclick="window.location.href = '<%= plays_path %>';" class="btn btn-primary btn-lg">Page 2</a></small>
 	<% end %>
 	<% unless params[:controller] == "home" && params[:action] == "index" %>
-		<small><%= link_to "HOME", "/",class: "btn btn-primary btn-lg" %></small>
+		<small><a href="" onclick="window.location.href = '/';" class="btn btn-primary btn-lg">Home</a></small>
 	<% end %>
   </h1>
 </div>

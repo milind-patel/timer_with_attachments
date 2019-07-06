@@ -5,6 +5,67 @@
 <% @plays.each do |post| %>
   <tr>
     <td><%= post.timer %></td>
-    <td><%= post.source %></td>        
+    <td><%= image_tag(post.source,style: "width:10%;") %></td>        
   </tr>
 <% end %>
+
+<script type="text/javascript">
+  (function() {
+    document.addEventListener("turbolinks:load", function() {  
+    	var count = 10;
+      var image_count = 0;
+      var img = document.getElementById("image");
+      var total_images = <%= @images.count rescue nil %>;
+
+      // Code to save timer and image entries in plays table
+      document.getElementById("SaveTimer").onclick = function(){
+        Rails.ajax({
+          type: "POST",
+          url: "/log_timer",
+          data: "image_count="+image_count+"&timer="+count,
+          success: function(data) { 
+            var tbody = document.querySelector('tbody');
+            tbody.innerHTML += '<tr><td>'+data.timer+'</td><td><img src='+data.source+' style="width:10%;"></td></tr>';
+          }
+        })
+      };
+      
+      // Code to show image based on timer index
+      function getImage(){
+        Rails.ajax({
+          type: "GET",
+          url: "images/"+image_count,
+          dataType: "json",
+          success: function(data) { 
+            console.log(data);
+            img.src = data; 
+            
+          }
+        })
+      }
+
+      // Code to decrease timer and image count based on regular interval
+      function reduce_timer_count(){
+        count = count - 1;
+        image_count = image_count + 1;
+        if(count == 0)
+          count = 10;
+        if(image_count == total_images)
+          image_count = 0; 
+      }
+
+      // Code to display timer value
+      function getTimeLeft() {
+        document.getElementById("timer").innerHTML = count;	  
+        setTimeout(function(){
+        	reduce_timer_count(); 	        	
+	      }, 990);      
+      }
+
+      // Code which is running at every second
+      setInterval(getImage, 1000);
+      setInterval(getTimeLeft, 1000);  	      
+	    
+    });
+  })();
+</script>

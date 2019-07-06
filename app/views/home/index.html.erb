@@ -1,12 +1,15 @@
-
-<h1>Images with Index</h1>
-<div class="width:100%;">
-  <% if @images.present? %>
-    <% @images.each_with_index do |image,index| %>
+<% if @images.present? %>
+	<h1>Images with Index</h1>
+	<div class="width:100%;">
+	  <% @images.each_with_index do |image,index| %>
       <span style="margin-left:20px;">
         <%= index %>
         <%= image_tag(image,style: "width: 5%; height: 30%;") rescue nil%>
       </span>
-    <% end %> 
-  <% end %>
-</div>
+    <% end %> 	  
+	</div>
+<% end %>
+
+<% if @images.blank? %>
+	<h1>No images are present</h1>
+<% end %>
